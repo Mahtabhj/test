@@ -18,6 +18,6 @@ int main()
 
    fprintf(fptr,"%d",num);
    fclose(fptr);
-
+   printf("hell");
    return 0;
 }
