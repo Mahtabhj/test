@@ -35,6 +35,54 @@
     return root;
 
  }
+ node * minValueNode( node* ptr)
+{
+     node* current = ptr;
+
+
+    while (current && current->left != NULL)
+        current = current->left;
+
+    return current;
+}
+node* deleteNode(struct node* root, int key)
+{
+   
+    if (root == NULL) return root;
+
+    if (key < root->data)
+        root->left = deleteNode(root->left, key);
+
+    else if (key > root->data)
+        root->right = deleteNode(root->right, key);
+
+    else
+    {
+        
+        if (root->left == NULL)
+        {
+            struct node *temp = root->right;
+            delete root;
+            return temp;
+        }
+        else if (root->right == NULL)
+        {
+            struct node *temp = root->left;
+            delete root;
+            return temp;
+        }
+
+   
+        node* temp = minValueNode(root->right);
+
+        
+        root->data = temp->data;
+
+       
+        root->right = deleteNode(root->right, temp->data);
+    }
+    return root;
+}
  void inorder(node *root)
 {
     if (root != NULL)
@@ -68,18 +116,42 @@ void postorder(node* root) {
  int main()
 {
 
-    root = insertnode(root, 5);
-    insertnode(root, 3);
-    insertnode(root, 2);
-    insertnode(root, 4);
+    int i,choice;
+    printf("Enter the root = \n");
+    int r;
+    scanf("%d",&r);
+    root = insertnode(root, r);
+    for(;;)
+    {
+        printf("\n1. Insert");
+        printf("\n2. Delete");
+
+        printf("\n7. Exit");
+        printf("\nEnter what you want :");
+        scanf("%d",&choice);
+
+
+        if(choice==1){
+                int value;
+                printf("Enter the value = \n");
+                scanf("%d",&value);
+                insertnode(root, value);
+                inorder(root);
+                 printf("\n\n");
+        }
+         else if(choice==2){
+                int value;
+                printf("Enter the value = \n");
+                scanf("%d",&value);
+                deleteNode(root, value);
+                inorder(root);
+                 printf("\n\n");
+        }
 
 
 
-    inorder(root);
-    printf("\n\n\n\n");
-    preorder(root);
-    printf("\n\n\n\n");
-    postorder(root);
+else {return 0;}
 
-    return 0;
+
+}
 }
